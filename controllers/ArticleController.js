@@ -27,3 +27,18 @@ export const getArticles = async (req, res) => {
 	}
 }
 // ? getArticles
+
+// ! getArticle
+export const getArticle = async (req, res) => {
+
+	const { id } = req.params
+
+	try {
+		const find = await ArticleModel.findById(id)
+		res.json(find)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getArticle
