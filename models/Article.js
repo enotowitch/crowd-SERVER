@@ -1,7 +1,10 @@
 import mongoose from "mongoose"
 
 const articleSchema = new mongoose.Schema({
-	// * todo ? any fields with "strict: false" => can cause problems with likes:number etc
-}, { strict: false })
+	views: {
+		type: Number,
+		default: 0
+	}
+}, { strict: false }) // * add any unreg. field
 
 export default mongoose.model("Article", articleSchema)

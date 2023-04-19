@@ -34,7 +34,7 @@ export const getArticle = async (req, res) => {
 	const { id } = req.params
 
 	try {
-		const find = await ArticleModel.findById(id)
+		const find = await ArticleModel.findOneAndUpdate({ _id: id }, { $inc: { views: 1 } }, { returnDocument: "after" })
 		res.json(find)
 
 	} catch (error) {
