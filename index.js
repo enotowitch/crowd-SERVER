@@ -24,4 +24,5 @@ app.listen(PORT, err => err ? console.log(err) : console.log(`SERVER OK, PORT:${
 app.post("/addArticle", ArticleController.addArticle)
 app.get("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
+app.post("/likeArticle", ArticleController.likeArticle)
 // ? article
