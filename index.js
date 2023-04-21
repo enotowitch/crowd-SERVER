@@ -3,6 +3,7 @@ import cors from "cors"
 import mongoose from "mongoose"
 // * js
 import * as ArticleController from "./controllers/ArticleController.js"
+import * as UserController from "./controllers/UserController.js"
 
 // !! CONNECT
 // ! use
@@ -26,3 +27,8 @@ app.get("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
 app.post("/likeArticle", ArticleController.likeArticle)
 // ? article
+// ! user
+app.post("/auth", UserController.auth)
+app.post("/autoAuth", UserController.autoAuth)
+// ? user
+
