@@ -9,6 +9,6 @@ const articleSchema = new mongoose.Schema({
 		type: Array,
 		default: []
 	}
-}, { strict: false }) // * add any unreg. field
+}, { strict: false, timestamps: true }) // * add any unreg. field
 
 export default mongoose.model("Article", articleSchema)

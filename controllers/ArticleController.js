@@ -47,7 +47,7 @@ export const getArticle = async (req, res) => {
 export const likeArticle = async (req, res) => {
 
 	const { id } = req.body // id=articleId
-	const userId = 711 // todo real userId
+	const userId = req.userId
 
 	try {
 		const article = await ArticleModel.findById({ _id: id })

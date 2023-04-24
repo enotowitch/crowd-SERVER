@@ -9,7 +9,7 @@ export const addUserId = async (req, res, next) => {
 		const token = req.headers.authorization
 		const decoded = jwt.verify(token, process.env.JWT)
 
-		req.userId = decoded._id
+		req.userId = decoded
 		next()
 
 	} catch (err) { console.log(err) }

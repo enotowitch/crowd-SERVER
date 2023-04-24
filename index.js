@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 // * js
 import * as ArticleController from "./controllers/ArticleController.js"
 import * as UserController from "./controllers/UserController.js"
+import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
 // ! use
@@ -25,7 +26,7 @@ app.listen(PORT, err => err ? console.log(err) : console.log(`SERVER OK, PORT:${
 app.post("/addArticle", ArticleController.addArticle)
 app.get("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
-app.post("/likeArticle", ArticleController.likeArticle)
+app.post("/likeArticle", addUserId, ArticleController.likeArticle)
 // ? article
 // ! user
 app.post("/auth", UserController.auth)
