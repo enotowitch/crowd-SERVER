@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 // * js
 import * as ArticleController from "./controllers/ArticleController.js"
 import * as UserController from "./controllers/UserController.js"
+import * as CommentController from "./controllers/CommentController.js"
 import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
@@ -32,4 +33,7 @@ app.post("/likeArticle", addUserId, ArticleController.likeArticle)
 app.post("/auth", UserController.auth)
 app.post("/autoAuth", UserController.autoAuth)
 // ? user
-
+// ! comment
+app.post("/addComment", addUserId, CommentController.addComment)
+app.post("/getComments", CommentController.getComments)
+// ? comment
