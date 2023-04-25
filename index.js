@@ -35,5 +35,6 @@ app.post("/autoAuth", UserController.autoAuth)
 // ? user
 // ! comment
 app.post("/addComment", addUserId, CommentController.addComment)
+app.post("/rateComment", addUserId, CommentController.rateComment)
 app.post("/getComments", CommentController.getComments)
 // ? comment

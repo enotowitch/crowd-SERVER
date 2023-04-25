@@ -34,3 +34,35 @@ export const getComments = async (req, res) => {
 	}
 }
 // ? getComments
+
+// ! rateComment
+export const rateComment = async (req, res) => {
+
+	const { act, commentId } = req.body
+	const { userId } = req
+
+	try {
+		// * user can rate + or -, so userId can be only in likes or only in dislikes
+		if (act === "+") {
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $pull: { dislikes: userId } })
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $pull: { likes: userId } })
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $push: { likes: userId } })
+		}
+		if (act === "-") {
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $pull: { likes: userId } })
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $pull: { dislikes: userId } })
+			await CommentModel.findOneAndUpdate({ _id: commentId }, { $push: { dislikes: userId } })
+		}
+
+		const comment = await CommentModel.find({ _id: commentId })
+		const likes = comment[0].likes.length
+		const dislikes = comment[0].dislikes.length
+
+		let rating = likes - dislikes
+		res.json({ ok: true, rating })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? rateComment
