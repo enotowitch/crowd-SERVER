@@ -17,6 +17,10 @@ export const auth = async (req, res) => {
 		// * no user with email
 		if (dbUser.length === 0) {
 
+			if (password.length < 6) {
+				return res.json({ ok: false, msg: "password must have atleast 6 characters" })
+			}
+
 			const passwordHash = await bcrypt.hash(password, 10)
 
 			try {
@@ -42,6 +46,12 @@ export const auth = async (req, res) => {
 
 	// ! Log In
 	if (type === "Log In") {
+
+		// * no user with this email
+		if (dbUser.length === 0) {
+			return res.json({ ok: false, msg: "wrong email or password" })
+		}
+
 		const isValidPass = await bcrypt.compare(password, dbUser[0].password)
 
 		if (isValidPass) {
