@@ -24,7 +24,7 @@ app.listen(PORT, err => err ? console.log(err) : console.log(`SERVER OK, PORT:${
 
 // !! ROUTES
 // ! article
-app.post("/addArticle", ArticleController.addArticle)
+app.post("/addArticle", addUserId, ArticleController.addArticle)
 app.get("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
 app.post("/likeArticle", addUserId, ArticleController.likeArticle)

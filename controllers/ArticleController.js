@@ -7,7 +7,7 @@ export const addArticle = async (req, res) => {
 		const doc = await new ArticleModel({ ...req.body })
 		const saved = await doc.save()
 
-		res.json({ ok: true })
+		res.json({ ok: true, id: saved._id })
 
 	} catch (error) {
 		console.log(error)
