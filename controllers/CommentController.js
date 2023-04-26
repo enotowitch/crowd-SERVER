@@ -34,7 +34,7 @@ export const getComments = async (req, res) => {
 	}
 }
 // ? getComments
-
+// test commit
 // ! rateComment
 export const rateComment = async (req, res) => {
 
