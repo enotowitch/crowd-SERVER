@@ -12,5 +12,8 @@ export const addUserId = async (req, res, next) => {
 		req.userId = decoded
 		next()
 
-	} catch (err) { console.log(err) }
+	} catch (err) {
+		res.json({ ok: false })
+		console.log(err)
+	}
 }

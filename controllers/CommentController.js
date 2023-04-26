@@ -34,7 +34,7 @@ export const getComments = async (req, res) => {
 	}
 }
 // ? getComments
-// test commit
+
 // ! rateComment
 export const rateComment = async (req, res) => {
 
@@ -57,8 +57,7 @@ export const rateComment = async (req, res) => {
 		const comment = await CommentModel.find({ _id: commentId })
 		const likes = comment[0].likes.length
 		const dislikes = comment[0].dislikes.length
-
-		let rating = likes - dislikes
+		const rating = likes > dislikes ? likes : Number(-dislikes)
 		res.json({ ok: true, rating })
 
 	} catch (error) {
