@@ -65,3 +65,18 @@ export const likeArticle = async (req, res) => {
 	}
 }
 // ? likeArticle
+
+// ! deleteArticle
+export const deleteArticle = async (req, res) => {
+
+	const { id } = req.body // id=articleId
+
+	try {
+		const article = await ArticleModel.findOneAndDelete({ _id: id })
+		res.json({ ok: true })
+		
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? deleteArticle
