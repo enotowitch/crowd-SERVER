@@ -12,7 +12,7 @@ export const addComment = async (req, res) => {
 	try {
 		const doc = await new CommentModel({ ...req.body, user })
 		const saved = await doc.save()
-		res.json(saved)
+		res.json({ ok: true })
 
 	} catch (error) {
 		console.log(error)
