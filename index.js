@@ -29,6 +29,7 @@ app.get("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
 app.post("/likeArticle", addUserId, ArticleController.likeArticle)
 app.post("/deleteArticle", ArticleController.deleteArticle)
+app.post("/editArticle", ArticleController.editArticle)
 // ? article
 // ! user
 app.post("/auth", UserController.auth)

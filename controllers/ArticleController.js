@@ -74,9 +74,24 @@ export const deleteArticle = async (req, res) => {
 	try {
 		const article = await ArticleModel.findOneAndDelete({ _id: id })
 		res.json({ ok: true })
-		
+
 	} catch (error) {
 		console.log(error)
 	}
 }
 // ? deleteArticle
+
+// ! editArticle
+export const editArticle = async (req, res) => {
+
+	const { id } = req.body // id=articleId
+
+	try {
+		const article = await ArticleModel.findOneAndUpdate({ _id: id }, { ...req.body })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? editArticle
