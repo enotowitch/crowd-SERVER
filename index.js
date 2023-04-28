@@ -5,6 +5,7 @@ import mongoose from "mongoose"
 import * as ArticleController from "./controllers/ArticleController.js"
 import * as UserController from "./controllers/UserController.js"
 import * as CommentController from "./controllers/CommentController.js"
+import * as SubscriberController from "./controllers/SubscriberController.js"
 import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
@@ -40,3 +41,6 @@ app.post("/addComment", addUserId, CommentController.addComment)
 app.post("/rateComment", addUserId, CommentController.rateComment)
 app.post("/getComments", CommentController.getComments)
 // ? comment
+// ! subscriber
+app.post("/subscribe", SubscriberController.subscribe)
+// ? subscriber
