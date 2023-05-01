@@ -6,6 +6,7 @@ import * as ArticleController from "./controllers/ArticleController.js"
 import * as UserController from "./controllers/UserController.js"
 import * as CommentController from "./controllers/CommentController.js"
 import * as SubscriberController from "./controllers/SubscriberController.js"
+import * as CompanyController from "./controllers/CompanyController.js"
 import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
@@ -44,3 +45,7 @@ app.post("/getComments", CommentController.getComments)
 // ! subscriber
 app.post("/subscribe", SubscriberController.subscribe)
 // ? subscriber
+// ! company
+app.post("/addCompany", CompanyController.addCompany)
+app.get("/company/:id", CompanyController.getCompany)
+// ? company
