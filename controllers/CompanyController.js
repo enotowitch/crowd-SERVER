@@ -29,3 +29,16 @@ export const getCompany = async (req, res) => {
 	}
 }
 // ? getCompany
+
+// ! getCompanies
+export const getCompanies = async (req, res) => {
+
+	try {
+		const find = await CompanyModel.find({})
+		res.json(find)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getCompanies

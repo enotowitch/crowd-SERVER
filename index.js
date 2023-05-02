@@ -48,4 +48,5 @@ app.post("/subscribe", SubscriberController.subscribe)
 // ! company
 app.post("/addCompany", CompanyController.addCompany)
 app.get("/company/:id", CompanyController.getCompany)
+app.get("/getCompanies", CompanyController.getCompanies)
 // ? company
