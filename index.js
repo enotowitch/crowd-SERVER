@@ -1,6 +1,8 @@
 import express from "express"
 import cors from "cors"
 import mongoose from "mongoose"
+import multer from "multer"
+import fs, { existsSync } from "fs"
 // * js
 import * as ArticleController from "./controllers/ArticleController.js"
 import * as UserController from "./controllers/UserController.js"
@@ -50,3 +52,28 @@ app.post("/addCompany", CompanyController.addCompany)
 app.get("/company/:id", CompanyController.getCompany)
 app.get("/getCompanies", CompanyController.getCompanies)
 // ? company
+
+// ! MULTER
+const storage = multer.diskStorage({
+	"destination": (req, file, cb) => {
+		if (!existsSync("upload")) {
+			fs.mkdirSync("upload")
+		}
+		cb(null, "upload")
+	},
+	"filename": (req, file, cb) => {
+		cb(null, file.originalname)
+	}
+})
+
+const upload = multer({ storage })
+
+app.post("/upload", upload.single("image"), (req, res) => {
+	res.json({
+		url: `${process.env.SERVER_URL}upload/${req.file.originalname}`
+	}
+	)
+})
+
+app.use("/upload", express.static("upload"))
+// ? MULTER
