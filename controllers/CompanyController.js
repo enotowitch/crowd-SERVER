@@ -42,3 +42,18 @@ export const getCompanies = async (req, res) => {
 	}
 }
 // ? getCompanies
+
+// ! deleteCompany
+export const deleteCompany = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		await CompanyModel.findOneAndDelete({ _id: id })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? deleteCompany

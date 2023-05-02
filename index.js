@@ -51,6 +51,7 @@ app.post("/subscribe", SubscriberController.subscribe)
 app.post("/addCompany", CompanyController.addCompany)
 app.get("/company/:id", CompanyController.getCompany)
 app.get("/getCompanies", CompanyController.getCompanies)
+app.post("/deleteCompany", CompanyController.deleteCompany)
 // ? company
 
 // ! MULTER
