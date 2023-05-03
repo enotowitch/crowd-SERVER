@@ -57,3 +57,18 @@ export const deleteCompany = async (req, res) => {
 	}
 }
 // ? deleteCompany
+
+// ! editCompany
+export const editCompany = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		await CompanyModel.findOneAndUpdate({ _id: id }, { ...req.body })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? editCompany
