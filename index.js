@@ -53,6 +53,7 @@ app.get("/company/:id", CompanyController.getCompany)
 app.get("/getCompanies", CompanyController.getCompanies)
 app.post("/deleteCompany", CompanyController.deleteCompany)
 app.post("/editCompany", CompanyController.editCompany)
+app.get("/getTVL", CompanyController.getTVL)
 // ? company
 
 // ! MULTER

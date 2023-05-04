@@ -72,3 +72,18 @@ export const editCompany = async (req, res) => {
 	}
 }
 // ? editCompany
+
+// ! getTVL
+export const getTVL = async (req, res) => {
+
+	try {
+		const companies = await CompanyModel.find({})
+		const TVLs = []
+		companies.map(company => TVLs.push({ name: company.name, TVL: company.TVL }))
+		res.json(TVLs)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getTVL
