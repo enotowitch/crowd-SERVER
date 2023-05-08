@@ -33,8 +33,10 @@ export const getCompany = async (req, res) => {
 // ! getCompanies
 export const getCompanies = async (req, res) => {
 
+	const { skip } = req.body
+
 	try {
-		const find = await CompanyModel.find({})
+		const find = await CompanyModel.find({}).skip(skip).limit(5)
 		res.json(find)
 
 	} catch (error) {

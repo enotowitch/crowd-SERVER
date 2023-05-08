@@ -29,7 +29,7 @@ app.listen(PORT, err => err ? console.log(err) : console.log(`SERVER OK, PORT:${
 // !! ROUTES
 // ! article
 app.post("/addArticle", addUserId, ArticleController.addArticle)
-app.get("/getArticles", ArticleController.getArticles)
+app.post("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
 app.post("/likeArticle", addUserId, ArticleController.likeArticle)
 app.post("/deleteArticle", ArticleController.deleteArticle)
@@ -50,7 +50,7 @@ app.post("/subscribe", SubscriberController.subscribe)
 // ! company
 app.post("/addCompany", CompanyController.addCompany)
 app.get("/company/:id", CompanyController.getCompany)
-app.get("/getCompanies", CompanyController.getCompanies)
+app.post("/getCompanies", CompanyController.getCompanies)
 app.post("/deleteCompany", CompanyController.deleteCompany)
 app.post("/editCompany", CompanyController.editCompany)
 app.get("/getTVL", CompanyController.getTVL)

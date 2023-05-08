@@ -18,8 +18,10 @@ export const addArticle = async (req, res) => {
 // ! getArticles
 export const getArticles = async (req, res) => {
 
+	const { skip } = req.body
+
 	try {
-		const find = await ArticleModel.find({})
+		const find = await ArticleModel.find({}).skip(skip).limit(5)
 		res.json(find)
 
 	} catch (error) {
