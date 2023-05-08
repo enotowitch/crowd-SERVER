@@ -23,10 +23,10 @@ export const addComment = async (req, res) => {
 // ! getComments
 export const getComments = async (req, res) => {
 
-	const { articleId } = req.body
+	const { articleId, skip } = req.body
 
 	try {
-		const find = await CommentModel.find({ articleId })
+		const find = await CommentModel.find({ articleId }).skip(skip).limit(5)
 		res.json(find)
 
 	} catch (error) {
