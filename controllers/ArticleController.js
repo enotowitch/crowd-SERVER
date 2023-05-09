@@ -21,7 +21,7 @@ export const getArticles = async (req, res) => {
 	const { skip } = req.body
 
 	try {
-		const find = await ArticleModel.find({}).skip(skip).limit(5)
+		const find = await ArticleModel.find({}).skip(skip).limit(12)
 		res.json(find)
 
 	} catch (error) {
