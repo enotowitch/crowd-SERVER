@@ -59,6 +59,7 @@ app.get("/getTVL", CompanyController.getTVL)
 // ! bonus
 app.post("/addBonus", BonusController.addBonus)
 app.post("/getBonuses", BonusController.getBonuses)
+app.get("/bonus/:id", BonusController.getBonus)
 // ? bonus
 
 // ! MULTER

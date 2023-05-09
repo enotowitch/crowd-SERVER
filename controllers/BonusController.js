@@ -29,7 +29,18 @@ export const getBonuses = async (req, res) => {
 	}
 }
 // ? getBonuses
-// test commit 2
-// test commit 3
-// test commit 4
-// test commit 5
+
+// ! getBonus
+export const getBonus = async (req, res) => {
+
+	const { id } = req.params
+
+	try {
+		const bonus = await BonusModel.findById({ _id: id })
+		res.json(bonus)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getBonus
