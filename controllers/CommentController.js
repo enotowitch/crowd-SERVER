@@ -26,7 +26,10 @@ export const getComments = async (req, res) => {
 	const { articleId, skip } = req.body
 
 	try {
-		const find = await CommentModel.find({ articleId }).skip(skip).limit(5)
+		const find = await CommentModel.find({ articleId })
+		.skip(skip)
+		// .limit(5)
+
 		res.json(find)
 
 	} catch (error) {
