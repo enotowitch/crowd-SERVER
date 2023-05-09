@@ -61,6 +61,7 @@ app.post("/addBonus", BonusController.addBonus)
 app.post("/getBonuses", BonusController.getBonuses)
 app.get("/bonus/:id", BonusController.getBonus)
 app.post("/deleteBonus", BonusController.deleteBonus)
+app.post("/editBonus", BonusController.editBonus)
 // ? bonus
 
 // ! MULTER
