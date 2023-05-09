@@ -9,6 +9,7 @@ import * as UserController from "./controllers/UserController.js"
 import * as CommentController from "./controllers/CommentController.js"
 import * as SubscriberController from "./controllers/SubscriberController.js"
 import * as CompanyController from "./controllers/CompanyController.js"
+import * as BonusController from "./controllers/BonusController.js"
 import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
@@ -55,6 +56,10 @@ app.post("/deleteCompany", CompanyController.deleteCompany)
 app.post("/editCompany", CompanyController.editCompany)
 app.get("/getTVL", CompanyController.getTVL)
 // ? company
+// ! bonus
+app.post("/addBonus", BonusController.addBonus)
+app.post("/getBonuses", BonusController.getBonuses)
+// ? bonus
 
 // ! MULTER
 const storage = multer.diskStorage({
