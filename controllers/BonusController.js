@@ -44,3 +44,18 @@ export const getBonus = async (req, res) => {
 	}
 }
 // ? getBonus
+
+// ! deleteBonus
+export const deleteBonus = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		await BonusModel.findOneAndDelete({ _id: id })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? deleteBonus
