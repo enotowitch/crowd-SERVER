@@ -3,8 +3,10 @@ import InvestmentModel from "../models/Investment.js"
 // ! addInvestment
 export const addInvestment = async (req, res) => {
 
+	const userId = req.userId
+
 	try {
-		const doc = await new InvestmentModel({ ...req.body })
+		const doc = await new InvestmentModel({ ...req.body, userId })
 		const saved = await doc.save()
 
 		res.json({ ok: true, id: saved._id })
@@ -19,9 +21,10 @@ export const addInvestment = async (req, res) => {
 export const getInvestments = async (req, res) => {
 
 	const { skip } = req.body
+	const userId = req.userId
 
 	try {
-		const find = await InvestmentModel.find({}).skip(skip).limit(12)
+		const find = await InvestmentModel.find({ userId }).skip(skip).limit(12)
 		res.json(find)
 
 	} catch (error) {

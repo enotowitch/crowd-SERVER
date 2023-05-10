@@ -66,7 +66,7 @@ app.post("/editBonus", BonusController.editBonus)
 // ? bonus
 // ! investment
 app.post("/addInvestment", addUserId, InvestmentController.addInvestment)
-app.post("/getInvestments", InvestmentController.getInvestments)
+app.post("/getInvestments", addUserId, InvestmentController.getInvestments)
 app.post("/removeInvestment", InvestmentController.removeInvestment)
 app.post("/deleteInvestment", InvestmentController.deleteInvestment)
 // ? investment
