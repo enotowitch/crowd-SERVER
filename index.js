@@ -66,6 +66,7 @@ app.post("/editBonus", BonusController.editBonus)
 // ? bonus
 // ! investment
 app.post("/addInvestment", addUserId, InvestmentController.addInvestment)
+app.post("/getInvestments", InvestmentController.getInvestments)
 // ? investment
 
 // ! MULTER

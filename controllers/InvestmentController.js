@@ -14,3 +14,18 @@ export const addInvestment = async (req, res) => {
 	}
 }
 // ? addInvestment
+
+// ! getInvestments
+export const getInvestments = async (req, res) => {
+
+	const { skip } = req.body
+
+	try {
+		const find = await InvestmentModel.find({}).skip(skip).limit(12)
+		res.json(find)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getInvestments
