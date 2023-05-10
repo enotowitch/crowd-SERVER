@@ -69,6 +69,8 @@ app.post("/addInvestment", addUserId, InvestmentController.addInvestment)
 app.post("/getInvestments", addUserId, InvestmentController.getInvestments)
 app.post("/removeInvestment", InvestmentController.removeInvestment)
 app.post("/deleteInvestment", InvestmentController.deleteInvestment)
+app.get("/investment/:id", InvestmentController.getInvestment)
+app.post("/editInvestment", InvestmentController.editInvestment)
 // ? investment
 
 // ! MULTER

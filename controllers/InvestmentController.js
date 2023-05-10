@@ -67,3 +67,33 @@ export const deleteInvestment = async (req, res) => {
 	}
 }
 // ? deleteInvestment
+
+// ! getInvestment
+export const getInvestment = async (req, res) => {
+
+	const { id } = req.params
+
+	try {
+		const investment = await InvestmentModel.findById({ _id: id })
+		res.json(investment)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getInvestment
+
+// ! editInvestment
+export const editInvestment = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		await InvestmentModel.findOneAndUpdate({ _id: id }, { ...req.body })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? editInvestment
