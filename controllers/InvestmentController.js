@@ -49,3 +49,18 @@ export const removeInvestment = async (req, res) => {
 	}
 }
 // ? removeInvestment
+
+// ! deleteInvestment
+export const deleteInvestment = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		await InvestmentModel.findOneAndDelete({ _id: id })
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? deleteInvestment
