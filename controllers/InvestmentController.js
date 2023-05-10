@@ -29,3 +29,23 @@ export const getInvestments = async (req, res) => {
 	}
 }
 // ? getInvestments
+
+// ! removeInvestment
+export const removeInvestment = async (req, res) => {
+
+	const { id } = req.body
+
+	try {
+		const find = await InvestmentModel.findOne({ _id: id })
+		if (find.closed) {
+			await InvestmentModel.updateOne({ _id: id }, { closed: false })
+		} else {
+			await InvestmentModel.updateOne({ _id: id }, { closed: true })
+		}
+		res.json({ ok: true })
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? removeInvestment
