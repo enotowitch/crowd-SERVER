@@ -10,7 +10,7 @@ export const writeus = async (req, res) => {
 		// ! DB
 		const doc = await new WriteusModel({ ...req.body })
 		const saved = await doc.save()
-		res.json({ ok: true })
+		res.json({ ok: true, msg: "Message received" })
 
 		// ! mailer
 		mailer(email, "We received your message", `
