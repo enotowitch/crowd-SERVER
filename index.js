@@ -11,6 +11,7 @@ import * as SubscriberController from "./controllers/SubscriberController.js"
 import * as CompanyController from "./controllers/CompanyController.js"
 import * as BonusController from "./controllers/BonusController.js"
 import * as InvestmentController from "./controllers/InvestmentController.js"
+import * as WriteusController from "./controllers/WriteusController.js"
 import { addUserId } from "./middleware/addUserId.js"
 
 // !! CONNECT
@@ -72,6 +73,9 @@ app.post("/deleteInvestment", InvestmentController.deleteInvestment)
 app.get("/investment/:id", InvestmentController.getInvestment)
 app.post("/editInvestment", InvestmentController.editInvestment)
 // ? investment
+// ! writeus
+app.post("/writeus", WriteusController.writeus)
+// ? writeus
 
 // ! MULTER
 const storage = multer.diskStorage({
