@@ -97,3 +97,18 @@ export const editInvestment = async (req, res) => {
 	}
 }
 // ? editInvestment
+
+// ! getInvested
+export const getInvested = async (req, res) => {
+
+	const userId = req.userId
+
+	try {
+		const find = await InvestmentModel.find({ userId })
+		res.json(find)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? getInvested
