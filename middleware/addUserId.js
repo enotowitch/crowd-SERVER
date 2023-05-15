@@ -13,7 +13,7 @@ export const addUserId = async (req, res, next) => {
 		next()
 
 	} catch (err) {
-		res.json({ ok: false })
+		res.json(undefined)
 		console.log(err)
 	}
 }
