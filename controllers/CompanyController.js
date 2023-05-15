@@ -36,7 +36,7 @@ export const getCompanies = async (req, res) => {
 	const { skip } = req.body
 
 	try {
-		const find = await CompanyModel.find({}).skip(skip).limit(12)
+		const find = await CompanyModel.find({}).skip(skip).limit(process.env.POST_LIMIT)
 		res.json(find)
 
 	} catch (error) {

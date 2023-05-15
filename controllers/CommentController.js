@@ -28,7 +28,7 @@ export const getComments = async (req, res) => {
 	try {
 		const find = await CommentModel.find({ articleId })
 			.skip(skip)
-		// .limit(12)
+		// .limit(process.env.POST_LIMIT)
 
 		res.json(find)
 
