@@ -24,7 +24,9 @@ export const getInvestments = async (req, res) => {
 	const userId = req.userId
 
 	try {
-		const find = await InvestmentModel.find({ userId }).skip(skip).limit(process.env.POST_LIMIT)
+		const find = await InvestmentModel.find({ userId })
+			.skip(skip)
+		// .limit(process.env.POST_LIMIT)
 		res.json(find)
 
 	} catch (error) {
