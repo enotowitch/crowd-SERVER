@@ -73,6 +73,7 @@ app.post("/deleteInvestment", InvestmentController.deleteInvestment)
 app.get("/investment/:id", InvestmentController.getInvestment)
 app.post("/editInvestment", InvestmentController.editInvestment)
 app.post("/getInvested", addUserId, InvestmentController.getInvested)
+app.post("/filterRevenue", addUserId, InvestmentController.filterRevenue)
 // ? investment
 // ! writeus
 app.post("/writeus", WriteusController.writeus)

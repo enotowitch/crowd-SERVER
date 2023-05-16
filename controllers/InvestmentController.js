@@ -112,3 +112,20 @@ export const getInvested = async (req, res) => {
 	}
 }
 // ? getInvested
+
+// ! filterRevenue
+export const filterRevenue = async (req, res) => {
+
+	const userId = req.userId
+	const { platform, end } = req.body
+	const endYear = { $regex: end, $options: 'i' } // endYear-05-25 => 2023-05-25
+
+	try {
+		const find = await InvestmentModel.find({ userId, platform, end: endYear })
+		res.json(find)
+
+	} catch (error) {
+		console.log(error)
+	}
+}
+// ? filterRevenue
