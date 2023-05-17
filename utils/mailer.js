@@ -4,6 +4,7 @@ import nodemailer from "nodemailer"
 // * how to setup: 
 // https://stackoverflow.com/questions/26948516/nodemailer-invalid-login
 // search: Since May 30, 2022, Google no longer supports less secure apps...
+// link to app pass: https://myaccount.google.com/u/1/apppasswords?utm_source=google-account&utm_medium=myaccountsecurity&utm_campaign=tsv-settings&rapt=AEjHL4NP7rp6aFinpkeUX9FqAeo9rPdHOL6pER_F6OJTdahdyrq6BIjp94ynspbBnD3WHMKzjFyhk4_GiCoLM2sQV-L8DQsHOw
 export default function mailer(email, Subject, html) {
 	// create reusable transporter object using the default SMTP transport 
 	var transporter = nodemailer.createTransport({
@@ -11,7 +12,7 @@ export default function mailer(email, Subject, html) {
 		port: '465',
 		auth: {
 			user: "copilotfunding@gmail.com",
-			pass: "abxiihzeevcjsecr"
+			pass: "cwwrxarflzsitojx"
 		},
 		secureConnection: 'true',
 		tls: {
