@@ -1,6 +1,7 @@
 import UserModel from "../models/User.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import mailer from "../utils/mailer.js"
 // 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -82,3 +83,29 @@ export const autoAuth = async (req, res) => {
 	}
 }
 // ? autoAuth
+
+// ! forgot
+export const forgot = async (req, res) => {
+
+	const { email } = req.body
+
+	const findUser = await UserModel.find({ email })
+	if (findUser.length === 0) {
+		return res.json({ msg: "no user with this email" })
+	} else {
+		// ! user found
+		// 1. gen randomPass
+		const randomPass = String(Math.random().toFixed(8)).replace(/0./, "") // 11807976
+		// 2. send new random pass to user email
+		mailer(email, "Password changed", `
+		<div style="font-size: 22px; margin-bottom: 15px"><b>Password changed</b></div>
+				<div style="font-size: 18px">New Password: <b>${randomPass}</b></div>
+		</div>`)
+		// 3. write new random pass to DB
+		const passwordHash = await bcrypt.hash(randomPass, 10)
+		await UserModel.findOneAndUpdate({ email }, { password: passwordHash })
+		// 4. msg to front
+		return res.json({ msg: `check ${email} for new password` })
+	}
+}
+// ? forgot

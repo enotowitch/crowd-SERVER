@@ -41,6 +41,7 @@ app.post("/editArticle", ArticleController.editArticle)
 // ! user
 app.post("/auth", UserController.auth)
 app.post("/autoAuth", UserController.autoAuth)
+app.post("/forgot", UserController.forgot)
 // ? user
 // ! comment
 app.post("/addComment", addUserId, CommentController.addComment)
