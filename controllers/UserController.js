@@ -78,8 +78,11 @@ export const autoAuth = async (req, res) => {
 		const userId = jwt.verify(token, process.env.JWT)
 
 		const findUser = await UserModel.find({ _id: userId })
+		// !! isAdmin
+		const isAdmin = findUser[0].email === process.env.ADMIN_EMAIL && true
+
 		const { password, ...userInfoToClient } = findUser[0]._doc // ! DON'T add/modify: -password from "doc"
-		res.json(userInfoToClient)
+		res.json({ ...userInfoToClient, isAdmin })
 	}
 }
 // ? autoAuth
