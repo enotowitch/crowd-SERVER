@@ -104,3 +104,22 @@ app.post("/upload", upload.single("image"), (req, res) => {
 
 app.use("/upload", express.static("upload"))
 // ? MULTER
+
+// ! AUTH: google, facebook
+// * "understand" require
+// TODO: Router.use() requires a middleware function but got a Promise
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+const passportSetup = import("./passport");
+const authRoute = import("./routes/auth");
+
+app.use(
+	cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use("/auth", authRoute);
