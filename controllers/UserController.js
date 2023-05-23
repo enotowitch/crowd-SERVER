@@ -27,7 +27,7 @@ export const auth = async (req, res) => {
 			}
 
 			try {
-				const doc = await new UserModel({ ...anyUserInfo, password: await passwordHash(password) })
+				const doc = await new UserModel({ ...anyUserInfo, password: await passwordHash(req.body.password) })
 				const saved = await doc.save()
 
 				const { password, ...userInfoToClient } = saved._doc // ! DON'T add/modify: -password from "doc"
