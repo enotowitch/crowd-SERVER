@@ -123,7 +123,8 @@ import { Strategy } from "passport-google-oauth20"
 passport.use(new Strategy({
 	clientID: "255712379284-1imn0h8jv4vrogs5hg5ff1526ef0i86j.apps.googleusercontent.com",
 	clientSecret: "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",
-	callbackURL: `${process.env.SERVER_URL}auth/google/callback`
+	callbackURL: `${process.env.SERVER_URL}auth/google/callback`,
+	userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
 },
 	function (accessToken, refreshToken, profile, done) {
 		done(null, profile);
@@ -132,7 +133,7 @@ passport.use(new Strategy({
 
 // ! routes
 app.get('/auth/google',
-	passport.authenticate('google', { scope: ['profile'] }));
+	passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
 
 app.get('/auth/google/callback',
 	passport.authenticate('google', { failureRedirect: '/login', successRedirect: process.env.CLIENT_URL + "/", }),
