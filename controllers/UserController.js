@@ -5,6 +5,10 @@ import mailer from "../utils/mailer.js"
 // 
 import dotenv from 'dotenv'
 dotenv.config()
+//
+const randomPass = () => String(Math.random().toFixed(8)).replace(/0./, "") // 11807976
+const passwordHash = async (password) => await bcrypt.hash(password, 10)
+const token = (userId) => jwt.sign(userId, process.env.JWT)
 
 // ! type = Sign Up/Log In
 export const auth = async (req, res) => {
@@ -22,18 +26,15 @@ export const auth = async (req, res) => {
 				return res.json({ ok: false, msg: "password must have atleast 6 characters" })
 			}
 
-			const passwordHash = await bcrypt.hash(password, 10)
-
 			try {
-				const doc = await new UserModel({ ...anyUserInfo, password: passwordHash })
+				const doc = await new UserModel({ ...anyUserInfo, password: await passwordHash(password) })
 				const saved = await doc.save()
 
 				const { password, ...userInfoToClient } = saved._doc // ! DON'T add/modify: -password from "doc"
 
 				const userId = String(saved._doc._id)
-				const token = jwt.sign(userId, process.env.JWT)
 
-				res.json({ ok: true, ...userInfoToClient, token })
+				res.json({ ok: true, ...userInfoToClient, token: token(userId) })
 
 			} catch (error) {
 				console.log(error)
@@ -60,9 +61,8 @@ export const auth = async (req, res) => {
 			const { password, ...userInfoToClient } = dbUser[0]._doc // ! DON'T add/modify: -password from "doc"
 
 			const userId = String(dbUser[0]._doc._id)
-			const token = jwt.sign(userId, process.env.JWT)
 
-			res.json({ ok: true, ...userInfoToClient, token })
+			res.json({ ok: true, ...userInfoToClient, token: token(userId) })
 		} else {
 			return res.json({ ok: false, msg: "wrong email or password" })
 		}
@@ -79,10 +79,13 @@ export const autoAuth = async (req, res) => {
 
 		const findUser = await UserModel.find({ _id: userId })
 		// !! isAdmin
-		const isAdmin = findUser[0].email === process.env.ADMIN_EMAIL && true
+		const isAdmin = findUser[0]?.email === process.env.ADMIN_EMAIL && true
 
-		const { password, ...userInfoToClient } = findUser[0]._doc // ! DON'T add/modify: -password from "doc"
+		const { password, ...userInfoToClient } = findUser?.[0]?._doc // ! DON'T add/modify: -password from "doc"
 		res.json({ ...userInfoToClient, isAdmin })
+	} else {
+		// !!
+		res.json()
 	}
 }
 // ? autoAuth
@@ -97,18 +100,52 @@ export const forgot = async (req, res) => {
 		return res.json({ msg: "no user with this email" })
 	} else {
 		// ! user found
-		// 1. gen randomPass
-		const randomPass = String(Math.random().toFixed(8)).replace(/0./, "") // 11807976
-		// 2. send new random pass to user email
+		// 1. send new random pass to user email
 		mailer(email, "Password changed", `
 		<div style="font-size: 22px; margin-bottom: 15px"><b>Password changed</b></div>
-				<div style="font-size: 18px">New Password: <b>${randomPass}</b></div>
+				<div style="font-size: 18px">New Password: <b>${randomPass()}</b></div>
 		</div>`)
-		// 3. write new random pass to DB
-		const passwordHash = await bcrypt.hash(randomPass, 10)
-		await UserModel.findOneAndUpdate({ email }, { password: passwordHash })
-		// 4. msg to front
+		// 2. write new random pass to DB
+		await UserModel.findOneAndUpdate({ email }, { password: await passwordHash(randomPass()) })
+		// 3. msg to front
 		return res.json({ msg: `check ${email} for new password` })
 	}
 }
 // ? forgot
+
+// ! authGoogle
+export const authGoogle = async (req, res) => {
+	const { user } = req
+
+	// if authGoogle ok
+	if (user) {
+		const gmail = user.emails?.[0].value
+		const find = await UserModel.find({ email: gmail })
+
+		let userId
+		// ! no user with email = gmail => create user
+		if (find.length === 0) {
+			const doc = await new UserModel({
+				email: gmail,
+				password: await passwordHash(randomPass()),
+				name: user.displayName,
+				img: user.photos[0].value
+			})
+			const saved = await doc.save()
+			userId = String(saved._doc._id)
+		} else {
+			// ! user with email = gmail exists
+			userId = String(find[0]._id)
+		}
+
+		res.status(200).json({
+			success: true,
+			message: "successfull",
+			user: user,
+			token: token(userId)
+			//   cookies: req.cookies
+		});
+	}
+
+}
+// ? authGoogle

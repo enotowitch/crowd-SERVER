@@ -7,10 +7,14 @@ import jwt from "jsonwebtoken"
 export const addUserId = async (req, res, next) => {
 	try {
 		const token = req.headers.authorization
-		const decoded = jwt.verify(token, process.env.JWT)
-
-		req.userId = decoded
-		next()
+		// !!
+		if (token) {
+			const decoded = jwt.verify(token, process.env.JWT)
+			req.userId = decoded
+			next()
+		} else {
+			res.json()
+		}
 
 	} catch (err) {
 		res.json(undefined)

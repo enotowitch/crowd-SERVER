@@ -13,12 +13,18 @@ import * as BonusController from "./controllers/BonusController.js"
 import * as InvestmentController from "./controllers/InvestmentController.js"
 import * as WriteusController from "./controllers/WriteusController.js"
 import { addUserId } from "./middleware/addUserId.js"
+import passport from "passport"
+import cookieSession from "cookie-session"
 
 // !! CONNECT
 // ! use
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+	origin: process.env.CLIENT_URL,
+	methods: "GET,POST,PUT,DELETE",
+	credentials: true,
+}))
 // ? use
 
 mongoose.connect("mongodb+srv://enotowitch:qwerty123@cluster0.9tnodta.mongodb.net/crowd?retryWrites=true&w=majority")
@@ -104,3 +110,51 @@ app.post("/upload", upload.single("image"), (req, res) => {
 
 app.use("/upload", express.static("upload"))
 // ? MULTER
+
+// ! authGoogle
+app.use(
+	cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+import { Strategy } from "passport-google-oauth20"
+
+passport.use(new Strategy({
+	clientID: "255712379284-1imn0h8jv4vrogs5hg5ff1526ef0i86j.apps.googleusercontent.com",
+	clientSecret: "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",
+	callbackURL: "http://localhost:5000/auth/google/callback",
+	userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+},
+	function (accessToken, refreshToken, profile, done) {
+		done(null, profile);
+	}
+));
+
+// ! routes
+app.get('/auth/google',
+	passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
+
+app.get('/auth/google/callback',
+	passport.authenticate('google', { failureRedirect: '/login', successRedirect: process.env.CLIENT_URL + "/", }),
+	function (req, res) {
+		// Successful authentication, redirect home.
+		res.redirect('/');
+	});
+
+app.get("/auth/login/success", UserController.authGoogle);
+
+app.get("/auth/logout", (req, res) => {
+	req.logout();
+	res.redirect(process.env.CLIENT_URL + "/");
+});
+// ? routes
+
+passport.serializeUser((user, done) => {
+	done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+	done(null, user);
+});
+// ? authGoogle
