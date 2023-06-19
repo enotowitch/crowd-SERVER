@@ -1,6 +1,7 @@
 import mongoose from "mongoose"
 
 const articleSchema = new mongoose.Schema({
+	_id: String,
 	views: {
 		type: Number,
 		default: 0

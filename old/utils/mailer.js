@@ -11,7 +11,7 @@ export default function mailer(email, Subject, html) {
 		host: 'smtp.gmail.com',
 		port: '465',
 		auth: {
-			user: process.env.ADMIN_EMAIL,
+			user: "copilotfunding@gmail.com",
 			pass: "cwwrxarflzsitojx"
 		},
 		secureConnection: 'true',
@@ -23,7 +23,7 @@ export default function mailer(email, Subject, html) {
 
 	// setup e-mail data with unicode symbols 
 	var mailOptions = {
-		from: process.env.ADMIN_EMAIL, // sender address 
+		from: "copilotfunding@gmail.com", // sender address 
 		to: email, // list of receivers 
 		subject: Subject, // Subject line 
 		html: html // html body 

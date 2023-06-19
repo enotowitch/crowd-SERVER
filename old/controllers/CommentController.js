@@ -4,13 +4,6 @@ import UserModel from "../models/User.js"
 // ! addComment
 export const addComment = async (req, res) => {
 
-	// ! prevent long words in comment
-	const { value } = req.body
-	let isWordTooLong = false
-	value.split(" ").forEach(each => each.length > 30 && (isWordTooLong = true))
-	if (isWordTooLong) { return }
-	// ? prevent long words in comment
-
 	const { userId } = req
 
 	const userInfo = await UserModel.findById(userId)
@@ -30,11 +23,12 @@ export const addComment = async (req, res) => {
 // ! getComments
 export const getComments = async (req, res) => {
 
-	const { postId, skip, postType } = req.body // postId=companyId/bonusId/articleId...
+	const { articleId, skip } = req.body
 
 	try {
-		const find = await CommentModel.find({ postId, postType }).sort({ _id: -1 })
+		const find = await CommentModel.find({ articleId })
 			.skip(skip)
+		// .limit(process.env.POST_LIMIT)
 
 		res.json(find)
 
@@ -66,7 +60,7 @@ export const rateComment = async (req, res) => {
 		const comment = await CommentModel.find({ _id: commentId })
 		const likes = comment[0].likes.length
 		const dislikes = comment[0].dislikes.length
-		const rating = likes - dislikes
+		const rating = likes > dislikes ? likes : Number(-dislikes)
 		res.json({ ok: true, rating })
 
 	} catch (error) {
@@ -74,4 +68,3 @@ export const rateComment = async (req, res) => {
 	}
 }
 // ? rateComment
-// test push

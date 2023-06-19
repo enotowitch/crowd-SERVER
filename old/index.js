@@ -12,8 +12,6 @@ import * as CompanyController from "./controllers/CompanyController.js"
 import * as BonusController from "./controllers/BonusController.js"
 import * as InvestmentController from "./controllers/InvestmentController.js"
 import * as WriteusController from "./controllers/WriteusController.js"
-import * as PostController from "./controllers/PostController.js"
-import * as PermissionController from "./controllers/PermissionController.js"
 import { addUserId } from "./middleware/addUserId.js"
 import passport from "passport"
 import cookieSession from "cookie-session"
@@ -22,10 +20,14 @@ import cookieSession from "cookie-session"
 // ! use
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+	origin: process.env.CLIENT_URL,
+	methods: "GET,POST,PUT,DELETE",
+	credentials: true,
+}))
 // ? use
 
-mongoose.connect(process.env.DB_URL)
+mongoose.connect("mongodb+srv://enotowitch:qwerty123@cluster0.9tnodta.mongodb.net/crowd?retryWrites=true&w=majority")
 	.then(console.log("DB OK"))
 	.catch(err => console.log(err))
 
@@ -34,13 +36,11 @@ app.listen(PORT, err => err ? console.log(err) : console.log(`SERVER OK, PORT:${
 // ?? CONNECT
 
 // !! ROUTES
-// ! post: (general for article,company,bonus...)
-app.post("/likePost", addUserId, PostController.likePost)
-app.post("/getPosts", PostController.getPosts)
-app.post("/addPost", addUserId, PostController.addPost)
-// ? post
 // ! article
+app.post("/addArticle", addUserId, ArticleController.addArticle)
+app.post("/getArticles", ArticleController.getArticles)
 app.get("/article/:id", ArticleController.getArticle)
+app.post("/likeArticle", addUserId, ArticleController.likeArticle)
 app.post("/deleteArticle", ArticleController.deleteArticle)
 app.post("/editArticle", ArticleController.editArticle)
 // ? article
@@ -48,8 +48,6 @@ app.post("/editArticle", ArticleController.editArticle)
 app.post("/auth", UserController.auth)
 app.post("/autoAuth", UserController.autoAuth)
 app.post("/forgot", UserController.forgot)
-app.post("/userChangeImg", addUserId, UserController.userChangeImg)
-app.post("/userChangeName", addUserId, UserController.userChangeName)
 // ? user
 // ! comment
 app.post("/addComment", addUserId, CommentController.addComment)
@@ -60,12 +58,16 @@ app.post("/getComments", CommentController.getComments)
 app.post("/subscribe", SubscriberController.subscribe)
 // ? subscriber
 // ! company
+app.post("/addCompany", CompanyController.addCompany)
 app.get("/company/:id", CompanyController.getCompany)
+app.post("/getCompanies", CompanyController.getCompanies)
 app.post("/deleteCompany", CompanyController.deleteCompany)
 app.post("/editCompany", CompanyController.editCompany)
 app.get("/getTVL", CompanyController.getTVL)
 // ? company
 // ! bonus
+app.post("/addBonus", BonusController.addBonus)
+app.post("/getBonuses", BonusController.getBonuses)
 app.get("/bonus/:id", BonusController.getBonus)
 app.post("/deleteBonus", BonusController.deleteBonus)
 app.post("/editBonus", BonusController.editBonus)
@@ -83,10 +85,6 @@ app.post("/filterRevenue", addUserId, InvestmentController.filterRevenue)
 // ! writeus
 app.post("/writeus", WriteusController.writeus)
 // ? writeus
-// ! permission
-app.post("/addPermission", PermissionController.addPermission)
-app.post("/getPermissions", PermissionController.getPermissions)
-// ? permission
 
 // ! MULTER
 const storage = multer.diskStorage({

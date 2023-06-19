@@ -1,11 +1,11 @@
 import mongoose from "mongoose"
 
-const bonusSchema = new mongoose.Schema({
+const permissionSchema = new mongoose.Schema({
 	_id: String,
-	likes: {
+	permission: {
 		type: Array,
 		default: []
 	}
 }, { strict: false, timestamps: true }) // * add any unreg. field
 
-export default mongoose.model("Bonus", bonusSchema)
+export default mongoose.model("Permission", permissionSchema)

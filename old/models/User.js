@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
 	},
 	img: {
 		type: String,
-		default: ""
+		default: "https://img.freepik.com/free-icon/user_318-644324.jpg?size=626&ext=jpg&ga=GA1.2.107752153.1670338047&semt=robertav1_2_sidr"
 	}
 })
 

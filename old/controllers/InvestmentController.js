@@ -4,16 +4,9 @@ import InvestmentModel from "../models/Investment.js"
 export const addInvestment = async (req, res) => {
 
 	const userId = req.userId
-	const { end } = req.body
 
 	try {
-		// make investment infinite if user NOT providing end date
-		let doc
-		if (!end) {
-			doc = await new InvestmentModel({ ...req.body, end: "9999-01-01", userId })
-		} else {
-			doc = await new InvestmentModel({ ...req.body, userId })
-		}
+		const doc = await new InvestmentModel({ ...req.body, userId })
 		const saved = await doc.save()
 
 		res.json({ ok: true, id: saved._id })
@@ -33,6 +26,7 @@ export const getInvestments = async (req, res) => {
 	try {
 		const find = await InvestmentModel.find({ userId })
 			.skip(skip)
+		// .limit(process.env.POST_LIMIT)
 		res.json(find)
 
 	} catch (error) {
@@ -125,18 +119,12 @@ export const getInvested = async (req, res) => {
 export const filterRevenue = async (req, res) => {
 
 	const userId = req.userId
-	const { platform } = req.body
+	const { platform, end } = req.body
+	const endYear = { $regex: end, $options: 'i' } // endYear-05-25 => 2023-05-25
+
 	try {
-		// * no platform selected => return all platforms
-		if (!platform) {
-			const find = await InvestmentModel.find({ userId })
-			return res.json(find)
-		} else {
-			// * return selected platform
-			// !! `filters` year on client 
-			const find = await InvestmentModel.find({ userId, platform })
-			return res.json(find)
-		}
+		const find = await InvestmentModel.find({ userId, platform, end: endYear })
+		res.json(find)
 
 	} catch (error) {
 		console.log(error)
