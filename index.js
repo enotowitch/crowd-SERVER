@@ -130,51 +130,51 @@ app.post("/saveRadarImg", (req, res) => {
 })
 // ? saveRadarImg
 
-// ! authGoogle
-app.use(
-	cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
-);
-app.use(passport.initialize());
-app.use(passport.session());
+// // ! authGoogle
+// app.use(
+// 	cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
+// );
+// app.use(passport.initialize());
+// app.use(passport.session());
 
-import { Strategy } from "passport-google-oauth20"
+// import { Strategy } from "passport-google-oauth20"
 
-passport.use(new Strategy({
-	clientID: "255712379284-1imn0h8jv4vrogs5hg5ff1526ef0i86j.apps.googleusercontent.com",
-	clientSecret: "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",
-	callbackURL: `${process.env.SERVER_URL}auth/google/callback`,
-	userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
-},
-	function (accessToken, refreshToken, profile, done) {
-		done(null, profile);
-	}
-));
+// passport.use(new Strategy({
+// 	clientID: "255712379284-1imn0h8jv4vrogs5hg5ff1526ef0i86j.apps.googleusercontent.com",
+// 	clientSecret: "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",
+// 	callbackURL: `${process.env.SERVER_URL}auth/google/callback`,
+// 	userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
+// },
+// 	function (accessToken, refreshToken, profile, done) {
+// 		done(null, profile);
+// 	}
+// ));
 
-// ! routes
-app.get('/auth/google',
-	passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
+// // ! routes
+// app.get('/auth/google',
+// 	passport.authenticate('google', { scope: ['openid', 'email', 'profile'] }));
 
-app.get('/auth/google/callback',
-	passport.authenticate('google', { failureRedirect: '/login', successRedirect: process.env.CLIENT_URL + "/", }),
-	function (req, res) {
-		// Successful authentication, redirect home.
-		res.redirect('/');
-	});
+// app.get('/auth/google/callback',
+// 	passport.authenticate('google', { failureRedirect: '/login', successRedirect: process.env.CLIENT_URL + "/", }),
+// 	function (req, res) {
+// 		// Successful authentication, redirect home.
+// 		res.redirect('/');
+// 	});
 
-app.get("/auth/login/success", UserController.authGoogle);
+// app.get("/auth/login/success", UserController.authGoogle);
 
-app.get("/auth/logout", (req, res) => {
-	req.logout();
-	res.redirect(process.env.CLIENT_URL + "/");
-});
-// ? routes
+// app.get("/auth/logout", (req, res) => {
+// 	req.logout();
+// 	res.redirect(process.env.CLIENT_URL + "/");
+// });
+// // ? routes
 
-passport.serializeUser((user, done) => {
-	done(null, user);
-});
+// passport.serializeUser((user, done) => {
+// 	done(null, user);
+// });
 
-passport.deserializeUser((user, done) => {
-	done(null, user);
-});
-// ? authGoogle
+// passport.deserializeUser((user, done) => {
+// 	done(null, user);
+// });
+// // ? authGoogle
 // test commit
