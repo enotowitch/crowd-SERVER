@@ -35,36 +35,30 @@ export const getPosts = async (req, res) => {
 	// current limits are 4/8/50
 	const { skip, limit, postType } = req.body
 
-	try {
-		let posts
-		// random posts for rightBar
-		if (limit === 4) {
-			posts = await eval(postType).find({})
-			const randNums = []
-			for (let i = 0; i < 15; i++) {
-				const randNum = Math.floor(Math.random() * posts.length)
-				if (!randNums.includes(randNum) && randNums.length < 4) {
-					randNums.push(randNum)
-				}
+	let posts
+	// random posts for rightBar
+	if (limit === 4) {
+		posts = await eval(postType).find({})
+		const randNums = []
+		for (let i = 0; i < 15; i++) {
+			const randNum = Math.floor(Math.random() * posts.length)
+			if (!randNums.includes(randNum) && randNums.length < 4) {
+				randNums.push(randNum)
 			}
-			// get 4 random posts
-			posts = [posts[randNums[0]], posts[randNums[1]], posts[randNums[2]], posts[randNums[3]]]
 		}
-		if (limit === 8) { // get last 8 posts (newest)
-			posts = await eval(postType).find({})
-			posts = posts.reverse()
-			posts.splice(8)
-		}
-		if (limit === 50) {
-			posts = await eval(postType).find({}).skip(skip).limit(limit)
-			posts = posts.reverse()
-		}
-		res.json(posts)
-
-	} catch (error) {
-		console.log(error)
-		res.json()
+		// get 4 random posts
+		posts = [posts[randNums[0]], posts[randNums[1]], posts[randNums[2]], posts[randNums[3]]]
 	}
+	if (limit === 8) { // get last 8 posts (newest)
+		posts = await eval(postType).find({})
+		posts = posts.reverse()
+		posts.splice(8)
+	}
+	if (limit === 50) {
+		posts = await eval(postType).find({}).skip(skip).limit(limit)
+		posts = posts.reverse()
+	}
+	res.json(posts)
 }
 // ? getPosts
 
