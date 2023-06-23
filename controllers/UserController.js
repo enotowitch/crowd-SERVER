@@ -76,7 +76,7 @@ export const auth = async (req, res) => {
 		}
 	}
 
-	return res.json()
+	// return res.json()
 	// ? Log In
 }
 
