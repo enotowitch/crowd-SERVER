@@ -42,14 +42,14 @@ export const auth = async (req, res) => {
 
 				const userId = String(saved._doc._id)
 
-				res.json({ ok: true, ...userInfoToClient, token: token(userId) })
+				return res.json({ ok: true, ...userInfoToClient, token: token(userId) })
 
 			} catch (error) {
 				console.log(error)
 			}
 		} else {
 			// * email already exists
-			res.json({ ok: false, msg: "email already exists" })
+			return res.json({ ok: false, msg: "email already exists" })
 		}
 	}
 	// ? Sign Up
@@ -70,11 +70,13 @@ export const auth = async (req, res) => {
 
 			const userId = String(dbUser[0]._doc._id)
 
-			res.json({ ok: true, ...userInfoToClient, token: token(userId) })
+			return res.json({ ok: true, ...userInfoToClient, token: token(userId) })
 		} else {
 			return res.json({ ok: false, msg: "wrong email or password" })
 		}
 	}
+
+	return res.json()
 	// ? Log In
 }
 
@@ -113,8 +115,7 @@ export const autoAuth = async (req, res) => {
 				// report created
 				const now = Math.floor(new Date() / 1000)
 				const report = await ReportModel.findOneAndUpdate({ _id: 1 }, { lastVisited: now })
-				// const unixDay = 60 * 60 * 24
-				const unixDay = 60 * 60 // !! FOR TEST
+				const unixDay = 60 * 60 * 24
 				const { lastVisited, lastReported } = report
 
 				// report sent more than 1 day ago => send report

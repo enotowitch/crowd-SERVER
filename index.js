@@ -113,6 +113,23 @@ app.post("/upload", upload.single("image"), (req, res) => {
 app.use("/upload", express.static("upload"))
 // ? MULTER
 
+// ! saveRadarImg
+app.post("/saveRadarImg", (req, res) => {
+	const { base64Img, name } = req.body
+
+	const data = base64Img.replace(/^data:image\/\w+;base64,/, '');
+
+	// if no cards folder => create it
+	if (!existsSync("cards")) {
+		fs.mkdirSync("cards")
+	}
+
+	fs.writeFile(`cards/${name}.png`, data, { encoding: 'base64' }, function (err) {
+		console.log("FINISHED")
+	});
+})
+// ? saveRadarImg
+
 // ! authGoogle
 app.use(
 	cookieSession({ name: "session", keys: ["lama"], maxAge: 24 * 60 * 60 * 100 })
@@ -160,3 +177,4 @@ passport.deserializeUser((user, done) => {
 	done(null, user);
 });
 // ? authGoogle
+// test commit
