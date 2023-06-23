@@ -58,7 +58,7 @@ export const getPosts = async (req, res) => {
 		posts = await eval(postType).find({}).skip(skip).limit(limit)
 		posts = posts.reverse()
 	}
-	res.json(posts)
+	return res.json(posts)
 }
 // ? getPosts
 
