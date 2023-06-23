@@ -25,7 +25,7 @@ app.use(express.json())
 app.use(cors())
 // ? use
 
-mongoose.connect("mongodb+srv://copilotfunding:3sru7r2iDDseroEn@cluster0.10xud8x.mongodb.net/copilotfunding?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://enotowitch:qwerty123@cluster0.9tnodta.mongodb.net/CopilotFunding?retryWrites=true&w=majority")
 	.then(console.log("DB OK"))
 	.catch(err => console.log(err))
 
