@@ -63,6 +63,7 @@ export const getPosts = async (req, res) => {
 
 	} catch (error) {
 		console.log(error)
+		res.json()
 	}
 }
 // ? getPosts
